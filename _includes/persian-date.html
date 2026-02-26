@@ -3,57 +3,60 @@
 {%- assign gm = g | slice: 5,2 | plus: 0 -%}
 {%- assign gd = g | slice: 8,2 | plus: 0 -%}
 
-{%- assign g_d_m = "0,31,59,90,120,151,181,212,243,273,304,334" | split: "," -%}
-
+{%- assign gdm = "0,31,59,90,120,151,181,212,243,273,304,334" | split: "," -%}
 {%- assign gy2 = gy | minus: 1600 -%}
 {%- assign gm2 = gm | minus: 1 -%}
 {%- assign gd2 = gd | minus: 1 -%}
 
-{%- assign a = 365 | times: gy2 -%}
-{%- assign b = gy2 | plus: 3 | divided_by: 4 -%}
-{%- assign c = gy2 | plus: 99 | divided_by: 100 -%}
-{%- assign d = gy2 | plus: 399 | divided_by: 400 -%}
+{%- comment -%}g_day_no = 365*gy2 + floor((gy2+3)/4) - floor((gy2+99)/100) + floor((gy2+399)/400) + gdm[gm2] + gd2{%- endcomment -%}
 
-{%- assign g_day_no = a | plus: b | minus: c | plus: d | plus: g_d_m[gm2] | plus: gd2 -%}
+{%- assign part1 = 365 | times: gy2 -%}
 
-{%- comment -%}Leap year adjustment (Gregorian){%- endcomment -%}
-{%- assign is_leap = 0 -%}
-{%- if gy | modulo: 4 == 0 -%}
-  {%- assign is_leap = 1 -%}
-{%- endif -%}
-{%- if gy | modulo: 100 == 0 -%}
-  {%- assign is_leap = 0 -%}
-{%- endif -%}
-{%- if gy | modulo: 400 == 0 -%}
-  {%- assign is_leap = 1 -%}
-{%- endif -%}
-{%- if gm2 > 1 and is_leap == 1 -%}
-  {%- assign g_day_no = g_day_no | plus: 1 -%}
-{%- endif -%}
+{%- assign t = gy2 | plus: 3 -%}
+{%- assign part2 = t | divided_by: 4 -%}
+
+{%- assign t = gy2 | plus: 99 -%}
+{%- assign part3 = t | divided_by: 100 -%}
+
+{%- assign t = gy2 | plus: 399 -%}
+{%- assign part4 = t | divided_by: 400 -%}
+
+{%- assign g_day_no = part1 | plus: part2 | minus: part3 | plus: part4 | plus: gdm[gm2] | plus: gd2 -%}
+
+{%- comment -%}Leap year adjustment{%- endcomment -%}
+{%- assign leap = 0 -%}
+{%- if gy | modulo: 4 == 0 -%}{%- assign leap = 1 -%}{%- endif -%}
+{%- if gy | modulo: 100 == 0 -%}{%- assign leap = 0 -%}{%- endif -%}
+{%- if gy | modulo: 400 == 0 -%}{%- assign leap = 1 -%}{%- endif -%}
+{%- if gm2 > 1 and leap == 1 -%}{%- assign g_day_no = g_day_no | plus: 1 -%}{%- endif -%}
 
 {%- assign j_day_no = g_day_no | minus: 79 -%}
+
 {%- assign j_np = j_day_no | divided_by: 12053 -%}
 {%- assign j_day_no = j_day_no | modulo: 12053 -%}
 
 {%- assign jy = 979 | plus: (j_np | times: 33) -%}
-{%- assign jy = jy | plus: (j_day_no | divided_by: 1461) -%}
+
+{%- assign addy = j_day_no | divided_by: 1461 -%}
+{%- assign jy = jy | plus: addy -%}
 {%- assign j_day_no = j_day_no | modulo: 1461 -%}
 
 {%- if j_day_no >= 366 -%}
-  {%- assign j_day_no2 = j_day_no | minus: 1 -%}
-  {%- assign jy = jy | plus: (j_day_no2 | divided_by: 365) -%}
-  {%- assign j_day_no = j_day_no2 | modulo: 365 -%}
+  {%- assign j_day_no = j_day_no | minus: 366 -%}
+  {%- assign addy2 = j_day_no | divided_by: 365 -%}
+  {%- assign jy = jy | plus: addy2 -%}
+  {%- assign j_day_no = j_day_no | modulo: 365 -%}
 {%- endif -%}
 
-{%- comment -%}Convert day number to month/day (Jalali){%- endcomment -%}
+{%- comment -%}Month/day{%- endcomment -%}
 {%- if j_day_no < 186 -%}
   {%- assign jm = 1 | plus: (j_day_no | divided_by: 31) -%}
   {%- assign jd = 1 | plus: (j_day_no | modulo: 31) -%}
 {%- else -%}
-  {%- assign j_day_no3 = j_day_no | minus: 186 -%}
-  {%- assign jm = 7 | plus: (j_day_no3 | divided_by: 30) -%}
-  {%- assign jd = 1 | plus: (j_day_no3 | modulo: 30) -%}
+  {%- assign j_day_no = j_day_no | minus: 186 -%}
+  {%- assign jm = 7 | plus: (j_day_no | divided_by: 30) -%}
+  {%- assign jd = 1 | plus: (j_day_no | modulo: 30) -%}
 {%- endif -%}
 
-{%- assign month_names = "فروردین,اردیبهشت,خرداد,تیر,مرداد,شهریور,مهر,آبان,آذر,دی,بهمن,اسفند" | split: "," -%}
-{{ jd }} {{ month_names[jm | minus: 1] }} {{ jy }}
+{%- assign months = "فروردین,اردیبهشت,خرداد,تیر,مرداد,شهریور,مهر,آبان,آذر,دی,بهمن,اسفند" | split: "," -%}
+{{ jd }} {{ months[jm | minus: 1] }} {{ jy }}
