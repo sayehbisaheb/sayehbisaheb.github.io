@@ -5,6 +5,7 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>یادداشت‌ها</title>
   <style>
     body{
@@ -30,8 +31,7 @@
   <li>
     <a href="{{ page.url }}">{{ page.title }}</a><br>
     <span class="date">
-      {% include persian-date.html date=page.date %}
-      — {{ page.date | date: "%A" }}
+      {{ page.date | date: "%A" }} — {{ page.jalali }}
     </span>
   </li>
 {% endfor %}
