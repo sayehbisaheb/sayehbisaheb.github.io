@@ -26,9 +26,11 @@
 
 {% assign jm_list = "31,31,31,31,31,31,30,30,30,30,30,29" | split: "," %}
 {% assign jm = 0 %}
+
 {% for days in jm_list %}
-  {% if j_day_no >= days %}
-    {% assign j_day_no = j_day_no | minus: days %}
+  {% assign days_i = days | plus: 0 %}
+  {% if j_day_no >= days_i %}
+    {% assign j_day_no = j_day_no | minus: days_i %}
     {% assign jm = jm | plus: 1 %}
   {% endif %}
 {% endfor %}
@@ -37,5 +39,4 @@
 {% assign jm = jm | plus: 1 %}
 
 {% assign month_names = "فروردین,اردیبهشت,خرداد,تیر,مرداد,شهریور,مهر,آبان,آذر,دی,بهمن,اسفند" | split: "," %}
-
 {{ jd }} {{ month_names[jm | minus: 1] }} {{ jy }}
