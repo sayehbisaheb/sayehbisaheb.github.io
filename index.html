@@ -1,29 +1,41 @@
+---
+---
+
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
   <title>یادداشت‌ها</title>
   <style>
     body{
       font-family: system-ui, Tahoma, Arial, sans-serif;
-      max-width: 800px;
+      max-width: 900px;
       margin: 40px auto;
       padding: 0 16px;
       line-height: 1.9;
     }
-    a{ text-decoration: none; }
+    .date{
+      color:#666;
+      font-size:0.9em;
+    }
   </style>
 </head>
 <body>
-  <h1>یادداشت‌ها</h1>
 
-  <ul>
-    <li>
-      <a href="Iran_Transition_Pathways_PolicyBrief_v2_FA.html">
-        هیچ تیری کافی نیست
-      </a>
-    </li>
-  </ul>
+<h1>یادداشت‌ها</h1>
+
+<ul>
+{% assign essays = site.pages | where_exp:"p","p.path contains 'essays/'" | sort: "date" | reverse %}
+{% for page in essays %}
+  <li>
+    <a href="{{ page.url }}">{{ page.title }}</a><br>
+    <span class="date">
+      {% include persian-date.html date=page.date %}
+      — {{ page.date | date: "%A" }}
+    </span>
+  </li>
+{% endfor %}
+</ul>
+
 </body>
 </html>
