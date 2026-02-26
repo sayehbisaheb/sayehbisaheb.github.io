@@ -1,0 +1,39 @@
+{% assign g = include.date | date: "%Y-%m-%d" %}
+{% assign y = g | slice: 0,4 | plus: 0 %}
+{% assign m = g | slice: 5,2 | plus: 0 %}
+{% assign d = g | slice: 8,2 | plus: 0 %}
+
+{% assign g_d_m = "0,31,59,90,120,151,181,212,243,273,304,334" | split: "," %}
+{% assign gy = y | minus: 1600 %}
+{% assign gm = m | minus: 1 %}
+{% assign gd = d | minus: 1 %}
+
+{% assign g_day_no = 365 | times: gy | plus: gy | plus: 3 | divided_by: 4 %}
+{% assign g_day_no = g_day_no | minus: gy | plus: 99 | divided_by: 100 %}
+{% assign g_day_no = g_day_no | plus: gy | plus: 399 | divided_by: 400 %}
+{% assign g_day_no = g_day_no | plus: g_d_m[gm] | plus: gd %}
+
+{% assign j_day_no = g_day_no | minus: 79 %}
+{% assign j_np = j_day_no | divided_by: 12053 %}
+{% assign j_day_no = j_day_no | modulo: 12053 %}
+{% assign jy = 979 | plus: j_np | times: 33 | plus: j_day_no | divided_by: 1461 %}
+{% assign j_day_no = j_day_no | modulo: 1461 %}
+
+{% if j_day_no >= 366 %}
+  {% assign jy = jy | plus: 1 %}
+  {% assign j_day_no = j_day_no | minus: 366 %}
+{% endif %}
+
+{% assign jm_list = "31,31,31,31,31,31,30,30,30,30,30,29" | split: "," %}
+{% assign jm = 0 %}
+{% for days in jm_list %}
+  {% if j_day_no >= days %}
+    {% assign j_day_no = j_day_no | minus: days %}
+    {% assign jm = jm | plus: 1 %}
+  {% endif %}
+{% endfor %}
+
+{% assign jd = j_day_no | plus: 1 %}
+{% assign jm = jm | plus: 1 %}
+
+{{ jd }} {{ "فروردین,اردیبهشت,خرداد,تیر,مرداد,شهریور,مهر,آبان,آذر,دی,بهمن,اسفند" | split: "," | at: jm | minus: 1 }} {{ jy }}
