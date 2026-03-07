@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دادگاه درون — نمایش‌نامه در سه پرده</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f4;
+    --text: #2c2c2c;
+    --text-light: #6b6b6b;
+    --accent: #8B5E3C;
+    --stage-dir: #5a7a5a;
+    --divider: #d4c9b8;
+    --highlight: #f0ebe3;
+    --act-bg: #3d3028;
+    --act-text: #f0ebe3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 2;
+    font-size: 16px;
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    padding: 0;
+  }
+
+  .play-container {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 40px 30px 80px;
+  }
+
+  /* Title Page */
+  .title-page {
+    text-align: center;
+    padding: 80px 20px 60px;
+    border-bottom: 2px solid var(--divider);
+    margin-bottom: 50px;
+  }
+
+  .title-page h1 {
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .title-page .subtitle {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text-light);
+    margin-bottom: 40px;
+  }
+
+  .title-page .epigraph {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--accent);
+    font-style: italic;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 2;
+  }
+
+  /* Characters List */
+  .characters-section {
+    margin-bottom: 50px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .characters-section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .characters-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .characters-list li {
+    padding: 6px 0;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .characters-list .char-name {
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .characters-list .char-desc {
+    color: var(--text-light);
+    font-weight: 300;
+  }
+
+  .characters-note {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--text-light);
+    font-style: italic;
+    line-height: 2;
+  }
+
+  /* Scene Description */
+  .scene-description {
+    margin-bottom: 50px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .scene-description h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  /* Act Headers */
+  .act-header {
+    background: var(--act-bg);
+    color: var(--act-text);
+    text-align: center;
+    padding: 30px 20px;
+    margin: 60px -30px 40px;
+    position: relative;
+  }
+
+  .act-header h2 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .act-header::before,
+  .act-header::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1px;
+    background: var(--act-text);
+    margin: 0 auto;
+    opacity: 0.4;
+  }
+
+  .act-header::before { margin-bottom: 15px; }
+  .act-header::after { margin-top: 15px; }
+
+  /* Stage Directions */
+  .stage-direction {
+    color: var(--stage-dir);
+    font-style: italic;
+    font-size: 14.5px;
+    line-height: 2;
+    margin: 12px 0;
+    padding: 8px 16px;
+    background: rgba(90, 122, 90, 0.04);
+    border-radius: 4px;
+    font-weight: 400;
+  }
+
+  /* Character Speech */
+  .speech-block {
+    margin: 20px 0;
+  }
+
+  .speaker {
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 15px;
+    display: inline;
+  }
+
+  .speaker-direction {
+    font-weight: 400;
+    color: var(--stage-dir);
+    font-style: italic;
+    font-size: 13.5px;
+  }
+
+  .dialogue {
+    font-size: 16px;
+    line-height: 2.1;
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  .dialogue p {
+    margin: 4px 0;
+  }
+
+  /* Section Breaks */
+  .section-break {
+    text-align: center;
+    margin: 40px 0;
+    color: var(--divider);
+    font-size: 20px;
+    letter-spacing: 10px;
+  }
+
+  /* Quoted Speech within Dialogue */
+  .quoted {
+    font-weight: 500;
+  }
+
+  /* End */
+  .play-end {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 2px solid var(--divider);
+  }
+
+  .play-end .end-word {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 30px;
+  }
+
+  .play-end .final-epigraph {
+    font-size: 15px;
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Print styles */
+  @media print {
+    body { background: white; font-size: 14px; }
+    .play-container { max-width: 100%; padding: 20px; }
+    .act-header { margin: 40px 0 30px; break-before: page; }
+    .stage-direction { background: none; border-right: 2px solid #ccc; }
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .play-container { padding: 20px 16px 60px; }
+    .title-page h1 { font-size: 32px; }
+    .act-header { margin: 40px -16px 30px; }
+    body { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="play-container">
+
+<!-- Title Page -->
+<div class="title-page">
+  <h1>دادگاه درون</h1>
+  <div class="subtitle">نمایش‌نامه در سه پرده</div>
+</div>
+
+<!-- Characters -->
+<div class="characters-section">
+  <h2>شخصیت‌ها</h2>
+  <ul class="characters-list">
+    <li><span class="char-name">قاضی</span></li>
+    <li><span class="char-name">دادستان</span></li>
+    <li><span class="char-name">وکیل مدافع</span></li>
+    <li><span class="char-name">من</span> <span class="char-desc">— مدعی، شاهد، متهم پنهان</span></li>
+    <li><span class="char-name">هیئت منصفه ۱</span></li>
+    <li><span class="char-name">هیئت منصفه ۲</span></li>
+    <li><span class="char-name">هیئت منصفه ۳</span></li>
+    <li><span class="char-name">هیئت منصفه ۴</span></li>
+    <li><span class="char-name">هیئت منصفه ۵</span></li>
+    <li><span class="char-name">هیئت منصفه ۶</span></li>
+    <li><span class="char-name">نقال ۱</span></li>
+    <li><span class="char-name">نقال ۲</span></li>
+    <li><span class="char-name">تماشاچی ۱</span> <span class="char-desc">— مردی از جنوب شهر</span></li>
+    <li><span class="char-name">تماشاچی ۲</span> <span class="char-desc">— مردی از همان محل</span></li>
+  </ul>
+  <div class="characters-note">
+    متهمان — پدر و مادر — غایب‌اند. دو صندلی خالی در وسط صحنه نشانه‌ی حضور آن‌هاست.
+  </div>
+</div>
+
+<!-- Scene -->
+<div class="scene-description">
+  <h2>صحنه</h2>
+  <div class="stage-direction">فضا را دقیق بساز: میز قاضی در عمق صحنه، اما نه کاملاً در مرکز — کمی به چپ. دو صندلی خالی در وسط، زیر نوری جداگانه که هیچ‌وقت کاملاً خاموش نمی‌شود. میزهای دادستان و وکیل مدافع طرفین. صندلی‌های هیئت منصفه در سایه — شش نفر که گاهی فراموش می‌کنی آنجا هستند تا وقتی که حرف می‌زنند. صندلی تنهایی برای «من» در مقابل دو صندلی خالی. بالکن کوچکی برای دو نقال — هر دو با لباسی که به هیچ دوره‌ای تعلق ندارد.</div>
+  <div class="stage-direction">در ردیف آخر، پشت هیئت منصفه، دو مرد نشسته‌اند. نه لباس رسمی. نه کت و شلوار. لباس کار. کسی بهشان توجه نکرده. آن‌ها هم توجهی به تشریفات ندارند.</div>
+  <div class="stage-direction">دو صندلی خالی باید در تمام مدت نمایش در دید تماشاگر باشند. حتی وقتی نور روی آن‌ها نیست.</div>
+</div>
+
+<!-- ACT 1 -->
+<div class="act-header"><h2>پرده‌ی اول: احضار</h2></div>
+
+<div class="stage-direction">پرده بالا می‌رود. تاریکی. بعد صدا — نه موسیقی، نه دیالوگ — فقط صدای یک صندلی که روی زمین کشیده می‌شود. نور می‌آید. نقال ۱ ایستاده. نقال ۲ نشسته. هر دو رو به تماشاگر.</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱:</div>
+  <div class="dialogue">
+    <p>این دادگاه هر شب تشکیل می‌شود.</p>
+    <p>نه اینجا.</p>
+    <p>اینجا فقط یک بار است.</p>
+    <p>اما در ذهنِ آن که می‌نشیند آن‌جا —</p>
+  </div>
+</div>
+
+<div class="stage-direction">اشاره به صندلی «من»</div>
+
+<div class="speech-block">
+  <div class="dialogue">
+    <p>— هر شب. حتی آن‌طرف آب.</p>
+  </div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲</div> <span class="speaker-direction">بدون اینکه نگاهش را از جای نامعلومی بگیرد</span><div class="speaker">:</div>
+  <div class="dialogue">
+    <p>بدتر از هر شب.</p>
+    <p>هر شب با نتیجه‌ای که از پیش معلوم است.</p>
+  </div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱:</div>
+  <div class="dialogue"><p>پس چرا دوباره؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue"><p>چون آدمی که می‌داند اما نمی‌تواند نپرسد — <em>(مکث)</em> — این است که آدم است.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">به تماشاگر، مثل کسی که داستانی قدیمی را شروع می‌کند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>پسری بود. پدر و مادری داشت. خانه‌ای داشت. سفره‌ای بود، چای بود، حرف بود.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue"><p>بود.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱:</div>
+  <div class="dialogue"><p>و یک شب — نه. <em>(مکث)</em> نه یک شب. هزار شب. هزار لحظه‌ی کوچک. <em>(مکث)</em> نوار ضبطی که ناپدید شد. حرفی که وسطش بریده شد. سکوتی که جای جواب نشست. <em>(مکث)</em> آهسته. مثل آبی که زیر در بیاید.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue"><p>یک شب؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱:</div>
+  <div class="dialogue"><p>تو بهتر می‌دانی.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue"><p>هزار شب. <em>(مکث)</em> پشت هزار سفره. در هزار خانه.</p></div>
+</div>
+
+<div class="stage-direction">نور روی دو صندلی خالی می‌آید. هر دو نقال به آن‌ها نگاه می‌کنند.</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">آهسته‌تر</span><div class="speaker">:</div>
+  <div class="dialogue"><p>نیامدند.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue"><p>نمی‌آیند.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱:</div>
+  <div class="dialogue"><p>شاید حق دارند.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue"><p>حق ربطی به آمدن و نیامدن ندارد.</p></div>
+</div>
+
+<div class="stage-direction">قاضی وارد می‌شود. بدون تشریفات. انگار آمده چیزی را تمام کند که از مدت‌ها پیش شروع شده. می‌نشیند. کاغذی را باز می‌کند، نگاه می‌کند، بدون اینکه بخواند زمین می‌گذارد.</div>
+
+<div class="speech-block">
+  <div class="speaker">قاضی:</div>
+  <div class="dialogue"><p>دادگاه تشکیل شده.</p></div>
+</div>
+
+<div class="stage-direction">مکث. همه می‌نشینند. «من» وارد می‌شود آخر. به دو صندلی خالی نگاه می‌کند — نه زیاد، فقط یک لحظه — بعد می‌نشیند.</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>متهمان نیامده‌اند.</p></div>
+</div>
+
+<div class="stage-direction">این جمله اعلام است، نه تعجب.</div>
+
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع</div> <span class="speaker-direction">بلند نمی‌شود — فقط صدایش</span><div class="speaker">:</div>
+  <div class="dialogue"><p>با اجازه. آیا بدون حضور متهمان می‌توان ادامه داد؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">قاضی:</div>
+  <div class="dialogue"><p>متهمان احضار شده‌اند. نیامده‌اند. دادگاه منتظر نمی‌ماند.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع:</div>
+  <div class="dialogue"><p>عرض بنده این است که محاکمه‌ی غایب —</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">قاضی</div> <span class="speaker-direction">بدون بالا بردن صدا، اما قاطع</span><div class="speaker">:</div>
+  <div class="dialogue"><p>آقای وکیل. این دادگاه از جنس محاکمه‌هایی نیست که شما می‌شناسید. اینجا کسی به زندان نمی‌رود. <em>(مکث)</em> اینجا قرار است چیزی نام‌گذاری شود. حضور متهمان شرط لازم نیست.</p></div>
+</div>
+
+<div class="stage-direction">وکیل مدافع ساکت می‌شود. اما دستش را روی میز می‌گذارد — انگار این نکته را نگه می‌دارد.</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>پرونده صبر نمی‌کند. آقای دادستان.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان</div> <span class="speaker-direction">بلند می‌شود. یک کلمه را مثل تیر شلیک می‌کند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>مسئولیت.</p></div>
+</div>
+
+<div class="stage-direction">مکث. می‌خواهد این کلمه تنها بایستد.</div>
+
+<div class="speech-block">
+  <div class="dialogue">
+    <p>نه آنچه با دست انجام شد. آنچه با سکوت پذیرفته شد. آنچه با «پیچیده بود» توجیه شد. آنچه با «می‌دانستند اما نگفتند» ماند.</p>
+    <p>سه اتهام:</p>
+    <p>اول — سکوت در برابر ظلمی که شاهدش بودند.</p>
+    <p>دوم — تحریف حقیقت برای حفظ آرامش خانه.</p>
+    <p>سوم — <em>(به «من» نگاه می‌کند)</em> — انتقال این سکوت و تحریف به نسل بعد. به کسی که حق داشت بداند.</p>
+  </div>
+</div>
+
+<div class="stage-direction">مکث</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>اما پیش از اتهام — شاهد اصلی باید بگوید چه دید.</p></div>
+</div>
+
+<div class="stage-direction">می‌نشیند.</div>
+
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع</div> <span class="speaker-direction">بلند می‌شود. کتش کمی چروک است</span><div class="speaker">:</div>
+  <div class="dialogue">
+    <p>قبل از شهادت — یک نکته.</p>
+    <p>قاضی محترم. «انتقال سکوت» اتهام نیست. هیچ کجای هیچ قانونی ننوشته که پدر و مادر باید تاریخ‌دان باشند. <em>(مکث)</em> اگر هر کس که سکوت کرد مجرم باشد — اتاق خالی می‌شود.</p>
+  </div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان</div> <span class="speaker-direction">بدون بلند شدن</span><div class="speaker">:</div>
+  <div class="dialogue"><p>سکوت در برابر حقیقت، انتقال دروغ است. و دروغ به فرزند، خیانت به آینده.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع:</div>
+  <div class="dialogue"><p>«خیانت» — <em>(بلند، اما مهار شده)</em> — آقای دادستان. شما از پدر و مادر حرف می‌زنید. نه از یک نظام. نه از یک دستگاه. دو نفرِ آدم که هر شب سر سفره نشسته‌اند و نان بریده‌اند.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان:</div>
+  <div class="dialogue"><p>همان جا. سرِ همان سفره. همان نان. و کنارش — چیزهایی که جمع شد. نوارهایی که ناپدید شد. حرف‌هایی که نصفه ماند. صداهایی که نباید بود.</p></div>
+</div>
+
+<div class="stage-direction">سکوت.</div>
+
+<div class="speech-block">
+  <div class="speaker">قاضی:</div>
+  <div class="dialogue"><p>«من» — بگویید چه دیدید.</p></div>
+</div>
+
+<div class="stage-direction">«من» بلند می‌شود. برای اولین بار مستقیم به دو صندلی خالی نگاه می‌کند. یک نفس می‌کشد.</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>می‌خواستم به آن‌ها افتخار کنم.</p></div>
+</div>
+
+<div class="stage-direction">مکث. این جمله ساده است. اما وزنش را بگذار.</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>هر بار که اسم انقلاب می‌آمد، توی ذهنم حساب می‌کردم. می‌گفتم خُب، پدرم چه‌کار کرد؟ مادرم کجا بود؟ <em>(مکث)</em> می‌پرسیدم. جواب یکی بود: «پیچیده بود.»</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان:</div>
+  <div class="dialogue"><p>چند بار پرسیدید؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>نمی‌دانم. ده بار. بیست بار.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان:</div>
+  <div class="dialogue"><p>و جواب؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>جواب عوض نمی‌شد. گاهی «وقتش نیست.» گاهی «بعداً می‌فهمی.» گاهی فقط سکوت. <em>(مکث)</em> و بعد یک جمله‌ی دیگر که بیشتر از همه تکرار می‌شد: «اشتباه‌هایی شد.»</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان:</div>
+  <div class="dialogue"><p>فقط همین؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>می‌گفتند اشتباه‌هایی شد. <em>(کوتاه‌تر)</em> اشتباه‌هایی «شد». فعل مجهول. کسی نکرد. شد. مثل بارانی که آمد. مثل باد. مثل تقدیر.</p></div>
+</div>
+
+<div class="stage-direction">مکث. «من» می‌نشیند. سکوتی سنگین در اتاق.</div>
+
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع</div> <span class="speaker-direction">آرام، بدون بلند شدن</span><div class="speaker">:</div>
+  <div class="dialogue"><p>فعل مجهول ابزار دروغگوها نیست. <em>(مکث)</em> فعل مجهول ابزار کسانی است که نمی‌دانند فاعل کیست — یا می‌دانند و می‌ترسند.</p></div>
+</div>
+
+<div class="stage-direction">قاضی به وکیل نگاه می‌کند. نه تأییدآمیز، نه رد. فقط نگاه.</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان</div> <span class="speaker-direction">بلند نمی‌شود. فقط</span><div class="speaker">:</div>
+  <div class="dialogue"><p>ترس، فاعل را پاک نمی‌کند.</p></div>
+</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">به نقال ۲، آهسته</span><div class="speaker">:</div>
+  <div class="dialogue"><p>«اشتباه‌هایی شد.»</p></div>
+</div>
+
+<div class="stage-direction">می‌خندد — نه از سرِ شادی</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>می‌دانی این جمله را از کِی می‌شنوم؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue"><p>می‌دانم.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱:</div>
+  <div class="dialogue"><p>از کِی؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue"><p>از همیشه.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱:</div>
+  <div class="dialogue"><p>خُب آدم دلش می‌خواهد تاریخ دقیقی بگذارد. مثلاً مشروطه. مثلاً کودتا. مثلاً —</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue"><p>فرقی نمی‌کند.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">انگار نشنیده، ادامه می‌دهد</span><div class="speaker">:</div>
+  <div class="dialogue"><p>هر بار یک انقلاب شد — «اشتباه‌هایی شد.» هر بار یک جنگ تمام شد — «اشتباه‌هایی شد.» هر بار خون ریخت و خون خشک شد و دوباره خون ریخت —</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue"><p>شد.</p></div>
+</div>
+
+<div class="stage-direction">مکث</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">به تماشاگر</span><div class="speaker">:</div>
+  <div class="dialogue"><p>می‌دانید مشکل این فعل چیست؟ از کسی سؤال نمی‌کند. <em>(مکث)</em> «شد» یعنی تمام شد. بروید خانه.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">قاضی</div> <span class="speaker-direction">بدون اینکه سرش را برگرداند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>نقال‌ها.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">فوری</span><div class="speaker">:</div>
+  <div class="dialogue"><p>می‌دانیم، می‌دانیم.</p></div>
+</div>
+
+<div class="stage-direction">هر دو ساکت می‌شوند. اما نقال ۲ لبخند کمرنگی دارد که محو نمی‌شود.</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع</div> <span class="speaker-direction">بلند می‌شود. دستانش را در جیب نمی‌کند — این بار نه</span><div class="speaker">:</div>
+  <div class="dialogue">
+    <p>قاضی محترم.</p>
+    <p>بگذارید چیزی بگویم که ممکن است دادستان هم قبول داشته باشد:</p>
+    <p>این دو نفر — <em>(به صندلی‌های خالی اشاره نمی‌کند. می‌داند همه می‌دانند کجایند)</em> — احتمالاً شرور نبودند.</p>
+  </div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان</div> <span class="speaker-direction">سریع، از جایش</span><div class="speaker">:</div>
+  <div class="dialogue"><p>کسی نگفت شرور بودند.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع:</div>
+  <div class="dialogue"><p>پس اتهام دقیقاً چیست؟ که ضعیف بودند؟ <em>(مکث)</em> آقای دادستان، شما از انسان‌ها انتظار قهرمانی دارید.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان:</div>
+  <div class="dialogue"><p>من از انسان‌ها انتظار صداقت دارم. با بچه‌شان. همین.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع:</div>
+  <div class="dialogue"><p>صداقت. <em>(مکث)</em> شما تابه‌حال شب، سرِ سفره، رو به بچه‌ی ده‌ساله‌تان نشسته‌اید و خواسته‌اید توضیح بدهید که دنیا چطور خراب شد؟ <em>(مکث)</em> چه می‌گویید؟ از کجا شروع می‌کنید؟</p></div>
+</div>
+
+<div class="stage-direction">سکوت</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان:</div>
+  <div class="dialogue"><p>از حقیقت.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع</div> <span class="speaker-direction">آهسته‌تر</span><div class="speaker">:</div>
+  <div class="dialogue"><p>حقیقتِ کدام شب؟ <em>(مکث)</em> حقیقت گاهی آن‌قدر بزرگ است که توی یک جمله جا نمی‌شود. و آن‌ها — <em>(اشاره‌ای مبهم به صندلی‌ها)</em> — جمله‌ی کوتاه‌تر را انتخاب کردند. «پیچیده بود.» <em>(مکث)</em> شاید دروغ بود. شاید تنها جمله‌ای بود که بلد بودند.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان:</div>
+  <div class="dialogue"><p>جمله‌های دیگری هم بلد بودند. به آن‌ها می‌رسیم.</p></div>
+</div>
+
+<div class="stage-direction">سکوت. وکیل مدافع لحظه‌ای می‌ایستد. می‌نشیند.</div>
+
+<!-- ACT 2 -->
+<div class="act-header"><h2>پرده‌ی دوم: شهادت</h2></div>
+
+<div class="stage-direction">نور کمی عوض می‌شود — نه تاریک‌تر، اما سنگین‌تر. «من» همان‌جا نشسته. دادستان بلند نمی‌شود. فاصله‌ی بین‌شان همان است. اما هوا عوض شده — انگار اتاق کوچک‌تر شده.</div>
+
+<div class="speech-block">
+  <div class="speaker">قاضی:</div>
+  <div class="dialogue"><p>«من» — ادامه بدهید.</p></div>
+</div>
+
+<div class="stage-direction">«من» سرش را بالا می‌آورد. اما به قاضی نگاه نمی‌کند. به جایی بین دو صندلی خالی نگاه می‌کند — به فضایی که هست و نیست.</div>
+
+<div class="speech-block">
+  <div class="speaker">من</div> <span class="speaker-direction">آهسته، انگار با خودش حرف می‌زند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>از کجا شروع کنم؟ <em>(مکث)</em> از کدام شب؟ <em>(مکث)</em> مسئله یک شب نبود. مسئله — <em>(مکث)</em> — مسئله هوای خانه بود.</p></div>
+</div>
+
+<div class="stage-direction">سکوت. کسی سؤال نمی‌کند. «من» خودش ادامه می‌دهد — مثل آدمی که از خواب حرف بزند.</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>خاله که می‌آمد — خاله مریم — خانه عوض می‌شد. انگار پنجره باز شود. صدای خنده بود. نوار ضبط می‌کرد برای ما. بنان. مرضیه. صداهای قبل از ما.</p></div>
+</div>
+
+<div class="stage-direction">مکث</div>
+
+<div class="speech-block">
+  <div class="dialogue">
+    <p>مادرم بعد از رفتن خاله، نوارها را جمع می‌کرد.</p>
+  </div>
+</div>
+
+<div class="stage-direction">مکث. اتاق ساکت است.</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>بی‌سروصدا. مثل کسی که ظرف جمع کند. مثل کسی که آشغال — <em>(مکث. تمام نمی‌کند)</em></p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع</div> <span class="speaker-direction">آرام</span><div class="speaker">:</div>
+  <div class="dialogue"><p>شاید می‌ترسید.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>شاید. <em>(مکث)</em> اما نوارها نبود فقط. یک بار — یک نفر مهمان بود — از ضبط صوت صدای مرضیه پخش شد. پدرم ضبط را خاموش کرد. بعد آرام، مثل اینکه هیچ اتفاقی نیفتاده، شروع کرد از فوتبال حرف زدن. <em>(مکث)</em> هیچ‌کس چیزی نگفت. مهمان هم.</p></div>
+</div>
+
+<div class="stage-direction">سکوت.</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان</div> <span class="speaker-direction">بدون بلند شدن، آرام</span><div class="speaker">:</div>
+  <div class="dialogue"><p>صدا خاموش شد.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>صدا خاموش شد. بله. <em>(مکث)</em> همیشه همین بود. چیزی بلند بود — خاموشش می‌کردند. کسی حرفی می‌زد — عوضش می‌کردند. <em>(مکث)</em> مادرم — مادرم استاد بود. وسط هر بحثی، بلند می‌شد، چای می‌آورد. میوه می‌آورد. «بخور، سرد می‌شود.» <em>(مکث)</em> صدایش مهربان بود. همیشه مهربان بود. <em>(مکث)</em> همان مهربانی بود که جای جواب می‌نشست.</p></div>
+</div>
+
+<div class="stage-direction">نقال ۲ آرام سرش را تکان می‌دهد. نقال ۱ نگاهش می‌کند اما چیزی نمی‌گوید.</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>خاله یک بار آمد. حرف‌هایی زد — از اتفاقاتی که برای شوهر دوستش افتاده بود. <em>(مکث)</em> مادرم وسط حرفش بلند شد رفت آشپزخانه. پدرم ساکت نشست. بعد خاله هم ساکت شد.</p></div>
+</div>
+
+<div class="stage-direction">مکث</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>بعد از رفتن خاله — شنیدم. از اتاق بغل. <em>(مکث)</em> مادرم گفت: «دیگر از این حرف‌ها توی خانه‌ی ما نزنه.» <em>(مکث)</em> پدرم گفت: «نباید بگذاریم اون کارو باهاش بکنن. <em>(مکث)</em> ولی —» <em>(مکث)</em> جمله تمام نشد.</p></div>
+</div>
+
+<div class="stage-direction">سکوت طولانی.</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان</div> <span class="speaker-direction">آهسته — نه سخت، فقط دقیق</span><div class="speaker">:</div>
+  <div class="dialogue"><p>«نباید بگذاریم.» <em>(مکث)</em> پس می‌دانستند.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>می‌دانستند. <em>(مکث)</em> اما آن «ولی» — آن «ولی» هیچ‌وقت تمام نشد.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع</div> <span class="speaker-direction">از جایش</span><div class="speaker">:</div>
+  <div class="dialogue"><p>می‌ترسیدند.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">من</div> <span class="speaker-direction">نگاهش نمی‌کند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>شاید. <em>(مکث)</em> اما ترس فقط بخشی بود. بخش دیگرش — <em>(مکث)</em> — باور بود. باور که اگر ساکت بمانی، همه‌چیز درست می‌شود. که اگر چای بیاوری و لبخند بزنی و موضوع را عوض کنی — زخم خودش خوب می‌شود.</p></div>
+</div>
+
+<div class="stage-direction">مکث</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>مادرم این‌طور بود. هر دردی را با محبت پانسمان می‌کرد. <em>(مکث)</em> هیچ دردی خوب نشد.</p></div>
+</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<div class="stage-direction">هیئت منصفه ۴ که تا حالا ساکت بوده، آرام به جلو خم می‌شود.</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۴:</div>
+  <div class="dialogue"><p>پانسمان.</p></div>
+</div>
+
+<div class="stage-direction">همه نگاهش می‌کنند.</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>نه شجاعت. نه دروغ. <em>(مکث)</em> پانسمان. <em>(مکث)</em> هر شب. روی هر زخم. بدون اینکه زخم را ببیند.</p></div>
+</div>
+
+<div class="stage-direction">می‌نشیند.</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<div class="speech-block">
+  <div class="speaker">قاضی:</div>
+  <div class="dialogue"><p>ادامه بدهید.</p></div>
+</div>
+
+<div class="stage-direction">«من» بلند نمی‌شود. از همان‌جا حرف می‌زند — آرام‌تر. انگار هر جمله از جایی عمیق‌تر می‌آید.</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>بعدها — وقتی بزرگ‌تر شدم — فهمیدم الگو همه‌جا بود. <em>(مکث)</em> فقط سیاست نبود.</p></div>
+</div>
+
+<div class="stage-direction">مکث. طولانی. دادستان صبر می‌کند.</div>
+
+<div class="speech-block">
+  <div class="dialogue">
+    <p>ازدواج اولم. می‌دانستند اشتباه است. مادرم خودش گفته بود — نه به من، به خاله. شنیدم. <em>(مکث)</em> اما سرِ سفره‌ی خواستگاری — لبخند. تبریک. «خوشبخت بشید.» <em>(مکث)</em> هیچ‌کس نگفت نه.</p>
+    <p><em>(مکث)</em></p>
+    <p>بعد طلاق آمد. می‌دانستند باید بشود. <em>(مکث)</em> جنگیدند. «عیب است.» «مردم چه می‌گویند.» «صبر کن.» <em>(مکث)</em> تنها بودم. تنهایِ تنها.</p>
+    <p><em>(مکث)</em></p>
+    <p>ازدواج دوم. این بار درست بود — و خودشان هم می‌دانستند درست است. <em>(مکث)</em> مخالفت کردند. <em>(مکث)</em> نه بلند. نه با دعوا. آرام. مثل همان نوارها — جمعشان کردند. «حالا وقتش نیست.» «مطمئنی؟» «باز فکر کن.» <em>(مکث)</em> ظاهرشان حمایت بود. ته‌شان — <em>(مکث)</em> — ته‌شان نه.</p>
+  </div>
+</div>
+
+<div class="stage-direction">سکوت. «من» سرش پایین است.</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان</div> <span class="speaker-direction">آرام</span><div class="speaker">:</div>
+  <div class="dialogue"><p>در هر سه‌تا —</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">من</div> <span class="speaker-direction">سرش را بالا می‌آورد</span><div class="speaker">:</div>
+  <div class="dialogue"><p>در هر سه‌تا تنها بودم. بله. <em>(مکث)</em> مثل آن شب‌ها سرِ سفره. وقتی سؤال می‌کردم و مادرم چای می‌آورد.</p></div>
+</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">آهسته، به نقال ۲</span><div class="speaker">:</div>
+  <div class="dialogue"><p>چای.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲</div> <span class="speaker-direction">بدون حرکت</span><div class="speaker">:</div>
+  <div class="dialogue"><p>چای همیشه حاضر بود.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱:</div>
+  <div class="dialogue"><p>سرِ هر سفره‌ای که حرفی نباید زده شود — چای بود. <em>(مکث)</em> یک مملکت چای خورده جای حرف.</p></div>
+</div>
+
+<div class="stage-direction">نقال ۲ چیزی نمی‌گوید. لبخند کمرنگش — همان لبخند — محو نمی‌شود.</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<div class="stage-direction">«من» ساکت مانده. قاضی صبر می‌کند. بعد:</div>
+
+<div class="speech-block">
+  <div class="speaker">قاضی:</div>
+  <div class="dialogue"><p>شاهد — آیا لحظه‌ای بود که — <em>(مکث)</em> — مستقیم‌تر از این‌ها؟</p></div>
+</div>
+
+<div class="stage-direction">«من» سرش را بالا می‌آورد. یک نفس می‌کشد. این لحظه باید درست بیاید — نه دراماتیک، نه ساده. مثل تکه‌ای که سال‌ها جایش خالی بوده و حالا خودش می‌افتد سرِ جا.</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue">
+    <p>آدم‌هایی بودند — <em>(مکث)</em> — که ناپدید شدند. اطراف ما. نه فامیل نزدیک. آدم‌های محله. آدم‌های فامیل دور. <em>(مکث)</em> اسم‌ها می‌آمد و بعد نمی‌آمد.</p>
+    <p><em>(مکث)</em></p>
+    <p>پدرم و مادرم — هیچ‌وقت — <em>(مکث)</em> — هیچ‌وقت نفرتی نشان ندادند. از هیچ‌کس. از هیچ‌چیز. <em>(مکث)</em> نه از آن‌هایی که بردند. نه از آن‌هایی که بُردند. <em>(مکث)</em> سکوت‌شان عادلانه تقسیم شده بود.</p>
+  </div>
+</div>
+
+<div class="stage-direction">نقال ۲ سرش را تکان می‌دهد. آهسته. مثل کسی که تأیید نمی‌کند — فقط می‌شناسد.</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue">
+    <p>یک شب سرِ میز شام. اسم یکی آمد. <em>(مکث)</em> فامیل دور. گفتند برده بودندش. <em>(مکث)</em> مادرم از سفره بلند شد. رفت آشپزخانه. صدای آب بود. فقط صدای آب.</p>
+    <p><em>(مکث)</em></p>
+    <p>پدرم ساکت نشست. بعد — آرام، مثل کسی که وضع هوا بگوید — گفت: «خُب. پیچیده بود. <em>(مکث)</em> خانواده‌ش هم — خودت می‌دانی.»</p>
+    <p><em>(مکث)</em></p>
+    <p>نگفت «آدم بدی بود.» <em>(مکث)</em> نگفت. اما همان بود. <em>(مکث)</em> «خودت می‌دانی» — همان بود.</p>
+  </div>
+</div>
+
+<div class="stage-direction">سکوت — سکوتی که تاریخ در آن نشسته است.</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>بعدها فهمیدم آن آدم هیچ‌کاری نکرده بود.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان</div> <span class="speaker-direction">نمی‌نشیند. همان‌جا</span><div class="speaker">:</div>
+  <div class="dialogue"><p>بعدها. <em>(مکث)</em> چند سال بعد؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>ده سال. شاید بیشتر.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان:</div>
+  <div class="dialogue"><p>و در این ده سال — پرسیدید؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>بله.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان:</div>
+  <div class="dialogue"><p>چه گفتند؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">من</div> <span class="speaker-direction">آهسته‌تر</span><div class="speaker">:</div>
+  <div class="dialogue"><p>گفت «خیلی وقت پیش بود.» گفت «دیگر فایده ندارد.» <em>(مکث)</em> یک بار — فقط یک بار — گفت «ما هم نمی‌دانستیم.»</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان:</div>
+  <div class="dialogue"><p>می‌دانستند؟</p></div>
+</div>
+
+<div class="stage-direction">سکوت.</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>بله. <em>(مکث)</em> مثل خاله مریم. مثل ازدواج. مثل همه‌چیز. <em>(مکث)</em> می‌دانستند. و مادرم چای آورد.</p></div>
+</div>
+
+<div class="stage-direction">«من» می‌نشیند.</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<div class="stage-direction">سکوت در اتاق. هیچ‌کس حرف نمی‌زند.</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۴</div> <span class="speaker-direction">آرام به جلو خم می‌شود</span><div class="speaker">:</div>
+  <div class="dialogue">
+    <p>«خودت می‌دانی.»</p>
+  </div>
+</div>
+
+<div class="stage-direction">همه نگاهش می‌کنند.</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>سه کلمه. پشت یک میز. <em>(مکث)</em> نه ایدئولوژی. نه نسل. نه زمانه. <em>(مکث)</em> سه کلمه که کار «آدم بدی بود» را می‌کند — بدون اینکه دست‌هایش کثیف شود.</p></div>
+</div>
+
+<div class="stage-direction">می‌نشیند. انگار کارش تمام شده.</div>
+
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع</div> <span class="speaker-direction">آرام</span><div class="speaker">:</div>
+  <div class="dialogue"><p>شاید. اما پشت آن سه کلمه — یک زندگی بود. یک خانه. سفره‌ای که هر شب پهن می‌شد.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۴:</div>
+  <div class="stage-direction">لحظه‌ای نگاهش می‌کند. بعد:</div>
+  <div class="dialogue"><p>زندگی بود. سه کلمه ماند.</p></div>
+</div>
+
+<div class="stage-direction">سکوت.</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">نمی‌تواند ساکت بماند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>«خودت می‌دانی.» <em>(یک مکث)</em> «آدم بدی بود.» <em>(مکث)</em> «پیچیده بود.» <em>(مکث)</em> می‌دانی فرقشان چیست؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲</div> <span class="speaker-direction">بدون حرکت</span><div class="speaker">:</div>
+  <div class="dialogue"><p>فرقی ندارد.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱:</div>
+  <div class="dialogue">
+    <p>درست است. <em>(مکث)</em> همه‌شان یک کار می‌کنند: در را می‌بندند.</p>
+    <p><em>(مکث)</em></p>
+    <p>هر که کشته شد — «خودت می‌دانی.» هر که زندان رفت — «پیچیده بود.» هر که فرار کرد — <em>(مکث)</em></p>
+  </div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲</div> <span class="speaker-direction">آرام</span><div class="speaker">:</div>
+  <div class="dialogue"><p>«آدم ضعیفی بود.»</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">نگاهش می‌کند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>دقیقاً. <em>(مکث)</em> هر که رفت — ضعیف بود. بد بود. تحمل نداشت. <em>(مکث. به تماشاگر)</em> هر که ماند — قهرمان. هر که رفت — فراری. <em>(انگشتش را بالا می‌آورد)</em> و می‌دانید بعد چه می‌شود؟ بچه‌ی آن که رفت، بعد از سال‌ها بر می‌گردد — نه خودش، ذهنش — <em>(اشاره به صندلی «من»)</em> — و دادگاه تشکیل می‌دهد.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue">
+    <p>آدم‌های بد تمام می‌شوند.</p>
+    <p><em>(مکث)</em></p>
+    <p>کسانی که این لقب را می‌دهند تمام نمی‌شوند.</p>
+  </div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">به نقال ۲ نگاه می‌کند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>تو از خودت حرف می‌زنی یا از آن‌ها؟</p></div>
+</div>
+
+<div class="stage-direction">نقال ۲ جواب نمی‌دهد. لبخند کمرنگش محو نمی‌شود.</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<div class="stage-direction">صدایی از ردیف آخر. همه برمی‌گردند. تماشاچی ۱ بلند شده. کسی نمی‌دانست اینجاست.</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۱:</div>
+  <div class="dialogue"><p>ببخشید ها.</p></div>
+</div>
+
+<div class="stage-direction">مکث. اتاق نمی‌داند با این صدا چه کند.</div>
+
+<div class="speech-block">
+  <div class="dialogue">
+    <p>من تو این حرفا نیستم. ولی — یه چیزی بگم؟</p>
+    <p>تو محل ما هم همین بود. نوار که هیچ — آقا عکس! عکسِ قبل از انقلاب. مادرم عکسای قدیمی رو قایم کرده بود. <em>(مکث)</em> نه دور انداخته بود ها — قایم کرده بود. زیر تشک. <em>(مکث)</em> می‌ترسید نگهشون داره. می‌ترسید دورشون بندازه. <em>(مکث)</em> هنوز زیر تشکه.</p>
+    <p><em>(مکث)</em></p>
+    <p>و آقامعلم — همون که گفتم. تو محلمون بود. بچه‌ها دوستش داشتن. یه روز نبود. تمام. <em>(مکث)</em> مادرش اومد در خونه‌ی ما. می‌گفت بگید کجاست. ما چی بگیم؟ هیچی نگفتیم. <em>(مکث)</em> بعد مادرش دیگه نیومد.</p>
+    <p><em>(مکث)</em></p>
+    <p>شما اینجا دارید حرف از نوار و ازدواج و «خودت می‌دونی» می‌زنید. <em>(کمی بلندتر)</em> آقا ما تو محل ده تا از این داشتیم. ده تا. اسماشون رو بگم؟</p>
+  </div>
+</div>
+
+<div class="stage-direction">قاضی نگاهش می‌کند. می‌خواهد بگوید اجازه نداری — اما چیزی جلویش را می‌گیرد.</div>
+
+<div class="speech-block">
+  <div class="speaker">قاضی:</div>
+  <div class="dialogue"><p>بنشینید.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۱</div> <span class="speaker-direction">نمی‌نشیند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>یه لحظه — یه لحظه.</p></div>
+</div>
+
+<div class="stage-direction">به «من» نگاه می‌کند</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>آقا. «خودت می‌دونی» — <em>(مکث)</em> — پدرِ من هم همین رو می‌گفت. <em>(مکث)</em> فرقمون چیه؟ فرقمون اینه که تو رفتی. <em>(مکث)</em> ما موندیم.</p></div>
+</div>
+
+<div class="stage-direction">می‌نشیند. تلخ. بی‌طعنه.</div>
+
+<div class="stage-direction">تماشاچی ۲ تکان می‌خورد. آرام، اما معلوم است که می‌خواهد حرف بزند. بالاخره:</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۲:</div>
+  <div class="dialogue"><p>اون موقع فرق داشت.</p></div>
+</div>
+
+<div class="stage-direction">تماشاچی ۱ برمی‌گردد و نگاهش می‌کند. این نگاه قدیمی است — سال‌هاست این بحث را دارند.</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۱:</div>
+  <div class="dialogue"><p>چی فرق داشت؟ آدمو بردن. برنگشت. چی فرق داشت؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۲:</div>
+  <div class="dialogue"><p>آخه — <em>(مکث)</em> — آخه جنگ بود. دشمن بود. ما داشتیم از خودمون دفاع می‌کردیم. یعنی آدم‌ها واقعاً اعتقاد داشتن. خدا بیامرز پسرِ حاج‌رضا هفده سالش بود رفت جبهه. هفده سال. <em>(مکث)</em> حالا هر چی شده — اون اعتقاد دروغ نبود.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۱:</div>
+  <div class="dialogue"><p>اعتقاد دروغ نبود. <em>(مکث)</em> ولی خون که ریخت، واقعی بود. آقامعلم که رفت، واقعی بود. مادرش که دیگه نیومد — واقعی بود. <em>(مکث)</em> و تو هم هیچی نگفتی.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۲:</div>
+  <div class="dialogue"><p>مگه آمریکا بد نبود؟ مگه دشمن نبود؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۱:</div>
+  <div class="dialogue"><p>بابا — <em>(با حوصله، اما خسته — این حرف را صد بار زده)</em> — دشمن بود. باشه. مگه آقامعلم دشمن بود؟ مگه بچه‌ی همسایه دشمن بود؟ <em>(مکث)</em> مگه اون که رفت دشمن بود؟</p></div>
+</div>
+
+<div class="stage-direction">اشاره‌ای مبهم به صندلی «من»</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۲</div> <span class="speaker-direction">آرام‌تر، دفاعی</span><div class="speaker">:</div>
+  <div class="dialogue"><p>کسی نگفت دشمن بود.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۱:</div>
+  <div class="dialogue"><p>نه. <em>(مکث)</em> گفتید «آدم ضعیفی بود.» <em>(مکث)</em> همون حرفه. فقط لباسش عوض شده.</p></div>
+</div>
+
+<div class="stage-direction">سکوت. تماشاچی ۲ جواب نمی‌دهد. نه از بی‌حرفی. از وزنِ آنچه حرف بعدی می‌طلبد.</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۱</div> <span class="speaker-direction">آرام‌تر</span><div class="speaker">:</div>
+  <div class="dialogue"><p>تو هم گفتی.</p></div>
+</div>
+
+<div class="stage-direction">سکوت.</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۲</div> <span class="speaker-direction">آهسته</span><div class="speaker">:</div>
+  <div class="dialogue"><p>نمی‌دونم. <em>(مکث)</em> شاید گفتم. <em>(مکث)</em> آدم تو اون فضا — <em>(سر تکان می‌دهد، تمام نمی‌کند)</em></p></div>
+</div>
+
+<div class="stage-direction">قاضی نگاه می‌کند. بیرون‌شان نمی‌کند.</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<!-- Jury Debate -->
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۳</div> <span class="speaker-direction">از جا بلند می‌شود — وقتی این نفر بلند می‌شود هوا عوض می‌شود</span><div class="speaker">:</div>
+  <div class="dialogue">
+    <p>یک لحظه.</p>
+  </div>
+</div>
+
+<div class="stage-direction">همه صبر می‌کنند.</div>
+
+<div class="speech-block">
+  <div class="dialogue">
+    <p>این دادگاه درباره‌ی دو نفر حرف می‌زند. اما پشت این دو نفر، یک نسل ایستاده.</p>
+    <p>نسلی که عشقش واقعی بود — حتی اگر کور بود. کتاب‌ها نوشتیم. سخنرانی کردیم. <em>(مکث — این «کردیم» شخصی است)</em> جان دادیم. جان گرفتیم. <em>(مکث)</em> نوار جمع کردیم — آری. حرف بریدیم — آری. <em>(مکث)</em> پدر و مادر این آدم تنها نبودند. ما همه بودیم.</p>
+  </div>
+</div>
+
+<div class="stage-direction">نگاهی به تماشاچی ۲ می‌اندازد — انگار این مرد ناشناس همین الان حرفش را تأیید کرده.</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>و اگر امروز بگوییم «اشتباه بود» — <em>(مکث)</em> — باید بدانیم که «ما» اشتباه کردیم. نه «آن‌ها.» <em>(مکث)</em> ما. همین ما که اینجا نشسته‌ایم و قضاوت می‌کنیم.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۵</div> <span class="speaker-direction">سرد، بی‌درنگ</span><div class="speaker">:</div>
+  <div class="dialogue"><p>تنها نبودن در اشتباه، اشتباه را عوض نمی‌کند.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۳</div> <span class="speaker-direction">به طرفش برمی‌گردد</span><div class="speaker">:</div>
+  <div class="dialogue"><p>نگفتم عوض می‌کند. گفتم ابعادش را ببینید.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۵:</div>
+  <div class="dialogue"><p>ابعاد. <em>(مکث)</em> نوار جمع شد. حرف بریده شد. ازدواج خراب شد. طلاق تنهایی شد. <em>(مکث)</em> ابعاد را دیدم. اشتباه همان اشتباه است.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۳</div> <span class="speaker-direction">صدایش بالا نمی‌رود — اما وزنش بالا می‌رود</span><div class="speaker">:</div>
+  <div class="dialogue"><p>شما حق دارید. اما قضاوتی که فقط حساب‌کتاب باشد — بدون فهم — <em>(مکث)</em> — خودش نوعی خشونت است.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۵:</div>
+  <div class="dialogue"><p>فهم بدون حساب‌کتاب، خودش نوعی فرار است.</p></div>
+</div>
+
+<div class="stage-direction">تنش بین‌شان در هوا می‌ماند.</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۶</div> <span class="speaker-direction">بدون بلند شدن، آرام، مثل کسی که مرز خطی را مشخص می‌کند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>دو چیز را قاطی نکنیم. <em>(مکث)</em> یکی «چرا این اتفاق افتاد» — این تاریخ است. دیگری «آیا این دو نفر مسئول‌اند» — این اخلاق است. <em>(مکث)</em> تاریخ به اخلاق جواب نمی‌دهد. اخلاق از تاریخ فرار نمی‌کند. اما این دو یک چیز نیستند.</p></div>
+</div>
+
+<div class="stage-direction">هیئت منصفه ۳ و ۵ هر دو نگاهش می‌کنند. ادامه نمی‌دهد. حرفش تمام است.</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۱</div> <span class="speaker-direction">آرام، مثل کسی که از عمقی دیگر حرف می‌زند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>ریشه‌ای که زیر خاک بپوسد — شاخه‌ها بعدها می‌افتند. <em>(مکث)</em> اول ریشه. بعد شاخه. بعد میوه‌ای که هیچ‌کس نمی‌خورد.</p></div>
+</div>
+
+<div class="stage-direction">مکث. همه نگاهش می‌کنند. ادامه نمی‌دهد.</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<!-- Defense closing -->
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع</div> <span class="speaker-direction">بلند می‌شود. این بار با دستانش کار می‌کند — انگار می‌خواهد چیزی را شکل بدهد در هوا</span><div class="speaker">:</div>
+  <div class="dialogue">
+    <p>قاضی محترم.</p>
+    <p>من نمی‌گویم بی‌گناهند. <em>(مکث)</em> این را از ابتدا گفتم و باز می‌گویم.</p>
+    <p>اما اجازه بدهید یک صحنه را تصویر کنم.</p>
+    <p>شب است. سفره پهن است. بچه نشسته. <em>(مکث)</em> اسمی از رادیو آمده — اسم کسی که دیگر نیست. یا نوار ضبطی روشن شده با صدایی که نباید باشد. یا خاله حرفی زده. <em>(مکث)</em> مادر باید جواب بدهد. پدر باید جواب بدهد. <em>(مکث)</em> چه بگویند؟</p>
+    <p>که دنیا ظالم است؟ به بچه‌ی ده‌ساله؟ <em>(مکث)</em> که خودشان می‌دانستند و کاری نکردند؟ <em>(مکث)</em> که آن آدم هیچ‌کاری نکرده بود و فقط بدشانسی آورد؟</p>
+  </div>
+</div>
+
+<div class="stage-direction">سکوت</div>
+
+<div class="speech-block">
+  <div class="dialogue">
+    <p>می‌گویم آدم‌ها گاهی از سرِ عشق کور می‌شوند. نه از سرِ شرارت.</p>
+    <p>و کسی که از سرِ عشق کور شده — <em>(مکث)</em> — وقتی می‌بیند، دیدن برایش سنگین‌تر از هر کس دیگری است.</p>
+    <p>چون باید بپذیرد که آنچه برایش زندگی کرده، به این رسیده.</p>
+  </div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان</div> <span class="speaker-direction">بدون بلند شدن</span><div class="speaker">:</div>
+  <div class="dialogue"><p>به چه رسیده؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">وکیل مدافع</div> <span class="speaker-direction">مکث. این سؤال درست همان‌جا زد که نباید</span><div class="speaker">:</div>
+  <div class="dialogue"><p>به — <em>(مکث)</em> — به فرزندی که رفته و از آن‌طرف دنیا دادگاه تشکیل داده.</p></div>
+</div>
+
+<div class="stage-direction">سکوت</div>
+
+<div class="speech-block">
+  <div class="dialogue">
+    <p>بعضی‌ها این وزن را تحمل می‌کنند. بعضی‌ها نمی‌کنند.</p>
+    <p>این ضعف است. اما ضعف، جنایت نیست.</p>
+  </div>
+</div>
+
+<div class="stage-direction">می‌نشیند.</div>
+
+<div class="speech-block">
+  <div class="speaker">دادستان</div> <span class="speaker-direction">بلند می‌شود. کوتاه، بدون تعارف</span><div class="speaker">:</div>
+  <div class="dialogue">
+    <p>«عشق کورتر از ترس است.» <em>(یک مکث)</em> قبول دارم.</p>
+    <p>اما سؤال این نیست که چرا کور شدند.</p>
+    <p>سؤال این است که وقتی چشم‌ها باز شد — <em>(«من» را نگاه می‌کند)</em> — چه کردند؟</p>
+    <p>بچه سؤال کرد. ده بار. بیست بار. <em>(مکث)</em> پاسخ عوض نشد.</p>
+    <p>نوار جمع شد. حرف بریده شد. ازدواج خراب شد و مادر چای آورد. <em>(مکث)</em> هر بار — همان پانسمان.</p>
+    <p><em>(مکث)</em></p>
+    <p>هر جمله‌ی دیگری — «نمی‌دانم»، «اشتباه کردم»، «می‌ترسیدم» — هر کدام شجاعتی می‌خواست. <em>(مکث)</em> «خودت می‌دانی» شجاعت نمی‌خواهد. فقط قربانی یک نفر دیگر را می‌خواهد.</p>
+  </div>
+</div>
+
+<div class="stage-direction">می‌نشیند.</div>
+
+<div class="stage-direction">سکوت طولانی.</div>
+
+<div class="speech-block">
+  <div class="speaker">من</div> <span class="speaker-direction">بدون اینکه بلند شود — آرام، انگار با خودش حرف می‌زند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>«نمی‌دانم» — <em>(مکث)</em> — اگر فقط یک بار این را گفته بودند. <em>(مکث)</em> اگر یک بار مادرم به جای چای — <em>(مکث)</em> — فقط نشسته بود و گفته بود: نمی‌دانم.</p></div>
+</div>
+
+<div class="stage-direction">قاضی نگاهش می‌کند.</div>
+
+<div class="speech-block">
+  <div class="speaker">قاضی:</div>
+  <div class="dialogue"><p>ادامه بدهید.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>نه. <em>(مکث)</em> همین بود.</p></div>
+</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<div class="speech-block">
+  <div class="speaker">قاضی</div> <span class="speaker-direction">این بار سرش را برمی‌گرداند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>نقال‌ها — بار آخر.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">دست‌هایش را بالا می‌آورد</span><div class="speaker">:</div>
+  <div class="dialogue"><p>تسلیم.</p></div>
+</div>
+
+<div class="stage-direction">نقال ۲ چیزی نمی‌گوید. سکوتش نوعی اعتراض است.</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">آهسته، به نقال ۲</span><div class="speaker">:</div>
+  <div class="dialogue"><p>چیزی نمی‌خواهی بگویی؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲</div> <span class="speaker-direction">لحظه‌ای مکث. بعد، رو به صحنه — نه رو به تماشاگر</span><div class="speaker">:</div>
+  <div class="dialogue">
+    <p>«نمی‌دانم» هم دروغ بود.</p>
+    <p><em>(مکث)</em></p>
+    <p>می‌دانستند.</p>
+    <p><em>(مکث)</em></p>
+    <p>از خاله می‌دانستند. از نوار می‌دانستند. از ازدواج می‌دانستند. <em>(مکث)</em> همه‌جا می‌دانستند — و همه‌جا چای آوردند.</p>
+  </div>
+</div>
+
+<div class="stage-direction">نقال ۱ نگاهش می‌کند. این بار نمی‌خندد.</div>
+
+<!-- ACT 3 -->
+<div class="act-header"><h2>پرده‌ی سوم: حکم</h2></div>
+
+<div class="stage-direction">نور تغییر می‌کند. نه تاریک‌تر — روشن‌تر. اما روشنایی سردی. «من» از صندلی‌اش بلند می‌شود. به دو صندلی خالی می‌رود. جلوی آن‌ها می‌ایستد. رو به آن‌ها.</div>
+
+<div class="speech-block">
+  <div class="speaker">من:</div>
+  <div class="dialogue"><p>من می‌خواستم به شما افتخار کنم.</p></div>
+</div>
+
+<div class="stage-direction">مکث. این جمله‌ای است که در پرده‌ی اول هم گفته شد. اما این بار متفاوت است. اولین بار، آرزو بود. حالا، حساب‌رسی.</div>
+
+<div class="speech-block">
+  <div class="dialogue">
+    <p>می‌خواستم بگویم پدرم — <em>(مکث)</em> — پدرم مردی بود که در سخت‌ترین سال‌ها ایستاد. مادرم زنی بود که حقیقت را دید و سکوت نکرد. <em>(مکث)</em> اینها را می‌خواستم بگویم.</p>
+    <p><em>(مکث)</em></p>
+    <p>نمی‌توانم.</p>
+    <p><em>(مکث)</em></p>
+    <p>شما نوارها را جمع کردید. حرف‌ها را بریدید. خاله را ساکت کردید. می‌دانستید و «خودت می‌دانی» گفتید. <em>(مکث)</em> وقتی ازدواج اشتباه بود — سکوت. وقتی طلاق درست بود — مخالفت. وقتی ازدواج درست بود — باز مخالفت. <em>(مکث)</em> و هر بار که پرسیدم — مادرم چای آورد.</p>
+    <p><em>(مکث)</em></p>
+    <p>انتخاب‌های شما را نمی‌پذیرم.</p>
+    <p>روایت شما را قبول ندارم.</p>
+    <p>درد خودم را انکار نمی‌کنم تا آرامش شما حفظ شود.</p>
+  </div>
+</div>
+
+<div class="stage-direction">مکث. نفسی می‌کشد.</div>
+
+<div class="speech-block">
+  <div class="dialogue">
+    <p>شما حق داشتید بترسید. <em>(مکث)</em> حق نداشتید به جای جواب — محبت بگذارید. <em>(مکث)</em> محبت بدون حقیقت — <em>(مکث)</em> — همان پانسمان روی زخمی است که هر شب باز می‌شود.</p>
+    <p><em>(مکث)</em></p>
+    <p>اما دیگر نمی‌گذارم تمام جانم صرف محاکمه‌ی بی‌پایان شما شود.</p>
+  </div>
+</div>
+
+<div class="stage-direction">به طرف صندلی‌اش برمی‌گردد. نمی‌نشیند. می‌ایستد.</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<!-- Verdict -->
+<div class="speech-block">
+  <div class="speaker">قاضی</div> <span class="speaker-direction">بلند می‌شود. از این لحظه لحن تغییر می‌کند — نه بلندتر، عمیق‌تر</span><div class="speaker">:</div>
+  <div class="dialogue"><p>هیئت منصفه.</p></div>
+</div>
+
+<div class="stage-direction">شش نفر بلند می‌شوند.</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>آیا متهمان مسئولیت اخلاقی دارند؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۵:</div>
+  <div class="dialogue"><p>مسئول‌اند.</p></div>
+</div>
+
+<div class="stage-direction">سکوت.</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۴:</div>
+  <div class="dialogue">
+    <p>مسئول‌اند.</p>
+    <p><em>(مکث)</em></p>
+    <p>عذر و مسئولیت با هم زندگی می‌کنند. نفی هم نمی‌کنند.</p>
+  </div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۶:</div>
+  <div class="dialogue">
+    <p>مسئول‌اند.</p>
+    <p><em>(مکث)</em></p>
+    <p>اما مسئولیت شکل‌های مختلف دارد. <em>(مکث)</em> اگر «مسئولیت» را با «شرارت» یکی بگیریم — نه عدالت کرده‌ایم، نه فهمیده‌ایم. <em>(مکث)</em> این‌ها ترسیده‌اند. از ترس سکوت کرده‌اند. سکوت‌شان را با محبت پوشانده‌اند. از پوشش‌شان کسی آسیب دیده. <em>(مکث)</em> این مسئولیت است. شرارت نیست.</p>
+  </div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۳:</div>
+  <div class="dialogue"><p>مسئول‌اند — در کنار نسلی که همه‌اش باید پاسخ بدهد. <em>(مکث)</em> و من — <em>(به خودش اشاره می‌کند)</em> — من هم.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۱</div> <span class="speaker-direction">آرام، مثل کسی که دارد چیزی را از خاک بیرون می‌کشد</span><div class="speaker">:</div>
+  <div class="dialogue"><p>مسئول‌اند. <em>(مکث)</em> اما حکم برای آن‌ها نیست. <em>(مکث)</em> دیدنش لازم است — برای خود «من». برای اینکه بداند ریشه کجا پوسید. و بداند شاخه‌ی خودش هنوز زنده است.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">هیئت منصفه ۲</div> <span class="speaker-direction">آخرین نفر. نگاهی به دو صندلی خالی می‌اندازد</span><div class="speaker">:</div>
+  <div class="dialogue">
+    <p>مسئول‌اند.</p>
+    <p>و آنچه از «من» گرفته شد برنمی‌گردد.</p>
+    <p>حکم، جبران نیست.</p>
+    <p>فقط نام‌گذاری است.</p>
+  </div>
+</div>
+
+<div class="stage-direction">شش نفر می‌نشینند.</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<div class="stage-direction">از ردیف آخر، تماشاچی ۲ — آرام، خسته‌تر از قبل:</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۲:</div>
+  <div class="dialogue">
+    <p>ما فکر می‌کردیم...</p>
+  </div>
+</div>
+
+<div class="stage-direction">نمی‌تواند تمام کند.</div>
+
+<div class="speech-block">
+  <div class="dialogue"><p>ما فکر می‌کردیم داریم — <em>(مکث)</em> — داریم درست — <em>(مکث)</em></p></div>
+</div>
+
+<div class="stage-direction">دستش را می‌گذارد روی زانوهایش. سرش پایین است.</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۱</div> <span class="speaker-direction">آرام، بدون طعنه</span><div class="speaker">:</div>
+  <div class="dialogue"><p>می‌دونم.</p></div>
+</div>
+
+<div class="stage-direction">تماشاچی ۲ سرش را بالا می‌آورد. نگاهش می‌کند.</div>
+
+<div class="speech-block">
+  <div class="speaker">تماشاچی ۱:</div>
+  <div class="dialogue"><p>می‌دونم چی می‌خوای بگی. <em>(مکث)</em> من هم اون‌جا بودم.</p></div>
+</div>
+
+<div class="stage-direction">دستش را می‌گذارد روی شانه‌ی او. یک لحظه. بعد برمی‌دارد.</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<!-- Judge's Verdict -->
+<div class="stage-direction">سکوت. قاضی یک فنجان چای برمی‌دارد — سرد است، معلوم است — لحظه‌ای نگاهش می‌کند. بعد آرام زمین می‌گذاردش. به جایی نگاه می‌کند که صحنه ندارد. بعد حرف می‌زند. آرام. مثل کسی که این جمله‌ها را بارها گفته، اما هنوز برایش سنگین است.</div>
+
+<div class="speech-block">
+  <div class="speaker">قاضی:</div>
+  <div class="dialogue">
+    <p>حکم دادگاه:</p>
+    <p>متهمان از مسئولیت اخلاقی مبرا نیستند.</p>
+    <p>رنجی که از انتخاب‌های آن‌ها به «من» رسیده، واقعی است.</p>
+    <p>خشم «من» مشروع است.</p>
+  </div>
+</div>
+
+<div class="stage-direction">نگاهش به «من» می‌افتد.</div>
+
+<div class="speech-block">
+  <div class="dialogue">
+    <p>اما «من» محکوم نیست که تمام عمر زندانبانِ آن‌ها در ذهن خودش بماند.</p>
+    <p>«من» می‌تواند حقیقت را ببیند، محکوم کند، فاصله بگذارد —</p>
+  </div>
+</div>
+
+<div class="stage-direction">مکث — این مکث را نگه دار</div>
+
+<div class="speech-block">
+  <div class="dialogue">
+    <p>— و برود.</p>
+  </div>
+</div>
+
+<div class="stage-direction">لحظه‌ای می‌ایستد. بعد:</div>
+
+<div class="speech-block">
+  <div class="dialogue">
+    <p>پرونده از دست خشمِ کور خارج می‌شود و به دست آگاهی سپرده می‌شود.</p>
+    <p>نه فراموشی.</p>
+    <p>نه تبرئه.</p>
+    <p>مرزبندی.</p>
+  </div>
+</div>
+
+<div class="stage-direction">فنجان را — آن فنجان سرد — نگاه می‌کند. بر نمی‌دارد. می‌نشیند.</div>
+
+<div class="stage-direction">همه بلند می‌شوند. «من» آخرین نفر است. به طرف در می‌رود. یک لحظه — فقط یک لحظه — به دو صندلی خالی نگاه می‌کند. بعد می‌رود.</div>
+
+<div class="stage-direction">درِ اتاق بسته می‌شود.</div>
+
+<div class="section-break">⁕ ⁕ ⁕</div>
+
+<!-- Epilogue -->
+<div class="stage-direction">دادستان و وکیل مدافع و هیئت منصفه و قاضی می‌روند. یکی‌یکی. بی‌سروصدا. تماشاچی‌ها هم بلند می‌شوند — آرام، بی‌حرف. تماشاچی ۱ جلوتر می‌رود. تماشاچی ۲ لحظه‌ای می‌ماند، به دو صندلی خالی نگاه می‌کند — بعد سرش را پایین می‌اندازد و می‌رود. نقال‌ها می‌مانند.</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">فنجان خالی قاضی را نگاه می‌کند</span><div class="speaker">:</div>
+  <div class="dialogue"><p>رفت.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue"><p>رفت.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱:</div>
+  <div class="dialogue"><p>خوب است؟</p></div>
+</div>
+
+<div class="stage-direction">نقال ۲ چیزی نمی‌گوید. به دو صندلی خالی نگاه می‌کند.</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱:</div>
+  <div class="dialogue"><p>یعنی رفت و تمام؟ <em>(مکث)</em> مرزبندی کرد و رفت؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue"><p>رفت. <em>(مکث)</em> باز هم رفت.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱:</div>
+  <div class="dialogue"><p>و فردا شب؟</p></div>
+</div>
+
+<div class="stage-direction">نقال ۲ نگاهش می‌کند. لبخند کمرنگ.</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱</div> <span class="speaker-direction">ادامه می‌دهد، کمی خسته‌تر</span><div class="speaker">:</div>
+  <div class="dialogue"><p>شاید نسل بعدی این اتاق را نسازد.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲</div> <span class="speaker-direction">آرام، بدون تأکید</span><div class="speaker">:</div>
+  <div class="dialogue"><p>می‌سازند.</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۱:</div>
+  <div class="dialogue"><p>چرا؟</p></div>
+</div>
+
+<div class="speech-block">
+  <div class="speaker">نقال ۲:</div>
+  <div class="dialogue"><p>چون هنوز نوار جمع می‌کنند. <em>(مکث)</em> هنوز «خودت می‌دانی» می‌گویند. <em>(مکث)</em> هنوز چای می‌آورند.</p></div>
+</div>
+
+<div class="stage-direction">نقال ۱ لحظه‌ای می‌ایستد. بعد کتش را می‌پوشد و می‌رود. بی‌خداحافظی.</div>
+
+<div class="stage-direction">نقال ۲ می‌ماند. چراغ‌ها یکی‌یکی خاموش می‌شوند. آخرین نور روی دو صندلی خالی می‌افتد.</div>
+
+<div class="stage-direction">نقال ۲ به طرف آن‌ها می‌رود. جلوی یکی می‌ایستد. دستش را بالا می‌آورد — انگار می‌خواهد چیزی را لمس کند. نمی‌کند. دستش را پایین می‌آورد.</div>
+
+<div class="stage-direction">تاریکی.</div>
+
+<div class="stage-direction">فقط صدا — دوباره همان صدای اول: یک صندلی که روی زمین کشیده می‌شود.</div>
+
+<!-- End -->
+<div class="play-end">
+  <div class="end-word">پایان</div>
+  <div class="final-epigraph">«حکم، جبران نیست. فقط نام‌گذاری است.»</div>
+</div>
+
+</div><!-- /play-container -->
+
+</body>
+</html>
